@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Standard favicon for most browsers -->
+    <link rel="icon" href="/assets/images/icons/favicon.ico" type="image/x-icon">
+    <!-- PNG version as a fallback -->
+    <link rel="icon" href="/assets/images/icons/favicon.png" type="image/png">
+    <!-- Apple devices -->
+    <link rel="apple-touch-icon" href="/assets/images/icons/apple-touch-icon.png">
+    <!-- Web manifest for modern browsers -->
+    <link rel="manifest" href="/assets/images/icons/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperator Capital - Web3 & AI Investment Fund</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            color: black;
+            overflow-x: hidden;
+            scroll-snap-type: y proximity;
+            scroll-behavior: smooth;
+        }
+        section {
+            scroll-snap-align: start;
+        }
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #D4AF37;
+            width: 0%;
+            z-index: 1000;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 3rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 80px;
+        }
+        header img {
+            height: auto;
+            max-height: 60px;
+            transform: scale(3.5);
+            cursor: pointer;
+        }
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: black;
+            font-size: 1rem;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s;
+        }
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #D4AF37;
+            transition: width 0.3s;
+        }
+        nav a:hover:after {
+            width: 100%;
+        }
+        nav a.active {
+            color: #D4AF37;
+        }
+        nav a:hover {
+            color: #D4AF37;
+        }
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: black;
+            animation: fadeIn 2s ease;
+            position: relative;
+            background: url('assets/images/hero.png') no-repeat center center;
+            background-size: cover;
+            overflow: hidden;
+        }
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.4);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #D4AF37;
+            animation: slideInDown 1.5s ease;
+        }
+        .hero-content p {
+            font-size: 1.4rem;
+            line-height: 2;
+            margin-bottom: 2rem;
+            animation: slideInUp 1.5s ease;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background: #D4AF37;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+            animation: fadeIn 2s ease;
+        }
+        .cta-button:hover {
+            background: #b5942e;
+            transform: scale(1.05);
+        }
+        .features-section {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: #f9f9f9;
+        }
+        .features-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #D4AF37;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #D4AF37;
+        }
+        .feature-item p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: black;
+        }
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            color: black;
+            border-top: 1px solid #ddd;
+        }
+        footer a {
+            color: #D4AF37;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, text-decoration 0.3s;
+        }
+        footer a:hover {
+            color: #b5942e;
+            text-decoration: underline;
+        }
+        .social-icons {
+            margin-bottom: 1rem;
+        }
+        .social-icons a {
+            color: #D4AF37;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #b5942e;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .menu-toggle {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem 1rem 0.5rem 0.2rem;
+                height: 60px;
+            }
+            header img {
+                max-height: 40px;
+                transform: scale(3.5);
+                transform-origin: left center;
+                margin-left: 0.5rem;
+            }
+            .menu-toggle {
+                display: block !important;
+                background: none;
+                border: none;
+                font-size: 2.5rem;
+                color: #D4AF37;
+                cursor: pointer;
+                padding: 0.5rem;
+                z-index: 1000;
+                position: relative;
+            }
+            nav {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                z-index: 999;
+                backdrop-filter: blur(10px);
+            }
+            nav.active {
+                display: flex;
+            }
+            nav a {
+                padding: 1.5rem;
+                font-size: 1.3rem;
+                text-align: center;
+                width: 100%;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+                color: #333;
+            }
+            nav a:last-child {
+                border-bottom: none;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            .features-section h2 {
+                font-size: 2rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    <header>
+        <img src="assets/images/logo/transparentlogo.png" alt="Imperator Capital Logo" onclick="window.location.href='/';">
+        <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav>
+            <a href="/about">About Us</a>
+            <a href="/research">Research</a>
+            <a href="/contact">Get in Touch</a>
+            <a href="https://x.com/Imperatorfund" target="_blank">Twitter</a>
+        </nav>
+    </header>
+    <section class="hero-section">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="assets/videos/bg-loop.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>Imperator Capital</h1>
+            <p>Empowering innovation in Web3 and AI through strategic investments and research-driven insights.</p>
+            <a href="/contact" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+    <section class="features-section">
+        <h2>Why Choose Us</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <h3>Expertise</h3>
+                <p>Our team combines deep expertise in Web3, AI, and traditional finance to identify and capitalize on emerging opportunities.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Innovation</h3>
+                <p>We stay at the forefront of technological advancements, leveraging cutting-edge tools and methodologies to drive superior returns.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Research-Driven</h3>
+                <p>Our investment decisions are backed by comprehensive research and analysis, ensuring informed and strategic portfolio management.</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="social-icons">
+            <a href="https://x.com/Imperatorfund" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/imperatorcapital/posts/?feedView=all" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://medium.com/@imperatorCapital" target="_blank"><i class="fab fa-medium"></i></a>
+        </div>
+        <p>© 2025 Imperator Capital. All Rights Reserved. | <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+    <script>
+        window.onscroll = () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            scrollProgress.style.width = `${scrolled}%`;
+        };
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('active');
+            this.textContent = nav.classList.contains('active') ? '×' : '☰';
+        });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('nav').classList.remove('active');
+                document.querySelector('.menu-toggle').textContent = '☰';
+            });
+        });
+        document.addEventListener('click', (e) => {
+            const nav = document.querySelector('nav');
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (!nav.contains(e.target) && !menuToggle.contains(e.target) && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                menuToggle.textContent = '☰';
+            }
+        });
+    </script>
+</body>
+</html> 

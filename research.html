@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Standard favicon for most browsers -->
+    <link rel="icon" href="/assets/images/icons/favicon.ico" type="image/x-icon">
+    <!-- PNG version as a fallback -->
+    <link rel="icon" href="/assets/images/icons/favicon.png" type="image/png">
+    <!-- Apple devices -->
+    <link rel="apple-touch-icon" href="/assets/images/icons/apple-touch-icon.png">
+    <!-- Web manifest for modern browsers -->
+    <link rel="manifest" href="/assets/images/icons/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research - Imperator Capital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            color: black;
+            overflow-x: hidden;
+            scroll-snap-type: y proximity;
+            scroll-behavior: smooth;
+        }
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: #D4AF37;
+            width: 0%;
+            z-index: 1000;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 3rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 80px;
+        }
+        header img {
+            height: auto;
+            max-height: 60px;
+            transform: scale(3.5);
+            cursor: pointer;
+        }
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: black;
+            font-size: 1rem;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s;
+        }
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #D4AF37;
+            transition: width 0.3s;
+        }
+        nav a:hover:after {
+            width: 100%;
+        }
+        nav a.active {
+            color: #D4AF37;
+        }
+        nav a:hover {
+            color: #D4AF37;
+        }
+        .research-section {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: #f9f9f9;
+            animation: fadeInUp 1.5s ease;
+        }
+        .research-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #D4AF37;
+            animation: bounceIn 1.5s ease;
+        }
+        .research-section p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: black;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .research-item {
+            background: #fff;
+            padding: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 2s ease;
+        }
+        .research-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .research-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #D4AF37;
+        }
+        .research-item p {
+            font-size: 1rem;
+            color: black;
+        }
+        .research-button {
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .research-button a {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background: #D4AF37;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .research-button a:hover {
+            background: #b5942e;
+            transform: scale(1.05);
+        }
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            color: black;
+            border-top: 1px solid #ddd;
+        }
+        footer a {
+            color: #D4AF37;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, text-decoration 0.3s;
+        }
+        footer a:hover {
+            color: #b5942e;
+            text-decoration: underline;
+        }
+        .social-icons {
+            margin-bottom: 1rem;
+        }
+        .social-icons a {
+            color: #D4AF37;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #b5942e;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @media (max-width: 768px) {
+            .research-section h2 {
+                font-size: 2rem;
+            }
+            .research-section p {
+                font-size: 1rem;
+            }
+        }
+        /* Add this OUTSIDE of any media queries */
+        .menu-toggle {
+            display: none;
+        }
+        /* Update mobile styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem 1rem 0.5rem 0.2rem;
+                height: 60px;
+            }
+            header img {
+                max-height: 40px;
+                transform: scale(3.5);
+                transform-origin: left center;
+                margin-left: 0.5rem;
+            }
+            /* Hide the regular nav menu on mobile */
+            nav {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 60px);
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem;
+                z-index: 999;
+                backdrop-filter: blur(10px);
+            }
+            /* Show nav only when active */
+            nav.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block !important;
+                background: none;
+                border: none;
+                font-size: 2.5rem;
+                color: #D4AF37;
+                cursor: pointer;
+                padding: 0.5rem;
+                z-index: 1000;
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    <header>
+        <img src="assets/images/logo/transparentlogo.png" alt="Imperator Capital Logo" onclick="window.location.href='/';">
+        <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <nav>
+            <a href="/about">About Us</a>
+            <a href="/research">Research</a>
+            <a href="/contact">Get in Touch</a>
+            <a href="https://x.com/Imperatorfund" target="_blank">Twitter</a>
+        </nav>
+    </header>
+    <section class="research-section">
+        <h2>Our Research</h2>
+        <p>Explore in-depth research and thought leadership on Web3 and AI technologies. Stay ahead with insights and analysis from Imperator Capital.</p>
+        <div class="research-grid">
+            <div class="research-item">
+                <h3>Blockchain Trends</h3>
+                <p>Comprehensive research on blockchain adoption, regulatory shifts, and emerging technologies-offering investors a strategic advantage in the digital asset space.</p>
+            </div>
+            <div class="research-item">
+                <h3>AI Revolution</h3>
+                <p>Explore how Al-driven technologies are transforming financial markets, algorithmic trading, and investment decision-making-creating new opportunities for investors.</p>
+            </div>
+            <div class="research-item">
+                <h3>Investment Strategies</h3>
+                <p>Access expert-driven investment strategies, including algorithmic trading, risk management, and portfolio optimisation in Web3 and Al-driven markets.</p>
+            </div>
+        </div>
+        <div class="research-button">
+            <a href="https://medium.com/@imperatorCapital" target="_blank">Access Full Research Documents</a>
+        </div>
+    </section>
+    <footer>
+        <div class="social-icons">
+            <a href="https://x.com/Imperatorfund" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/imperatorcapital/posts/?feedView=all" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://medium.com/@imperatorCapital" target="_blank"><i class="fab fa-medium"></i></a>
+        </div>
+        <p>© 2025 Imperator Capital. All Rights Reserved. | <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+    <script>
+        // Scroll progress bar
+        window.onscroll = () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            scrollProgress.style.width = `${scrolled}%`;
+        };
+        // Add mobile menu functionality
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('active');
+            this.textContent = nav.classList.contains('active') ? '×' : '☰';
+        });
+        // Close menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('nav').classList.remove('active');
+                document.querySelector('.menu-toggle').textContent = '☰';
+            });
+        });
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const nav = document.querySelector('nav');
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (!nav.contains(e.target) && !menuToggle.contains(e.target) && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                menuToggle.textContent = '☰';
+            }
+        });
+    </script>
+</body>
+</html> 
